@@ -3,6 +3,9 @@ const userController = require('../controllers/userController');
 const receitaController = require('../controllers/receitaController');
 const categoriaController = require('../controllers/categoriaController');
 const authController = require('../controllers/authController');
+
+const clienteController = require('../controllers/clienteController');
+
 const authenticateToken = require('../middleware/authenticateToken');
 
 const router = express.Router();
@@ -11,7 +14,7 @@ const db = require('../config/db_sequelize');
 /*db.sequelize.sync({force: true}).then(() => {
     console.log('{ force: true }');
 });*/
-db.Usuario.create({login:'admin', senha:'1234', tipo:2});
+//db.Usuario.create({login:'admin', senha:'1234', tipo:2});
 
 
 router.post('/login', authController.login);
@@ -36,5 +39,11 @@ router.delete('/categorias/:id', authenticateToken, categoriaController.deleteCa
 
 router.get('/categorias/:id/receitas', authenticateToken, receitaController.getReceitasByCategoria);
 
+
+router.get('/clientes', authenticateToken, clienteController.getClientes);
+router.post('/clientes', authenticateToken, clienteController.postCliente);
+router.get('/clientes/:id', authenticateToken, clienteController.getClienteById);
+router.put('/clientes/:id', authenticateToken, clienteController.putCliente);
+router.delete('/clientes/:id', authenticateToken, clienteController.deleteCliente);
 
 module.exports = router;

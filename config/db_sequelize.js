@@ -11,6 +11,8 @@ db.sequelize = sequelize;
 db.Usuario = require('../models/usuario.js')(sequelize, Sequelize);
 db.Receita = require('../models/receita.js')(sequelize, Sequelize);
 db.Categoria = require('../models/categoria.js')(sequelize, Sequelize);
+
+db.Cliente = require('../models/cliente.js')(sequelize, Sequelize);
 db.Categoria.hasMany(db.Receita, {foreignKey:'categoriaId', onDelete: 'NO ACTION'});
 module.exports = db;
 

@@ -5,7 +5,7 @@ const categoriaController = require('../controllers/categoriaController');
 const authController = require('../controllers/authController');
 
 const clienteController = require('../controllers/clienteController');
-
+const quartoController = require('../controllers/quartoController');
 const authenticateToken = require('../middleware/authenticateToken');
 
 const router = express.Router();
@@ -45,5 +45,11 @@ router.post('/clientes', authenticateToken, clienteController.postCliente);
 router.get('/clientes/:id', authenticateToken, clienteController.getClienteById);
 router.put('/clientes/:id', authenticateToken, clienteController.putCliente);
 router.delete('/clientes/:id', authenticateToken, clienteController.deleteCliente);
+
+router.post('/quartos', quartoController.postQuarto);
+router.get('/quartos', quartoController.getQuartos);
+router.get('/quartos/:id', quartoController.getQuartoById);
+router.put('/quartos/:id', quartoController.putQuarto);
+router.delete('/quartos/:id', quartoController.deleteQuarto);
 
 module.exports = router;

@@ -13,7 +13,10 @@ module.exports = (sequelize, Sequelize) => {
         email: {
             type: Sequelize.STRING,
             allowNull: false,
-            unique: true
+            unique: true,
+            validate: {
+                isEmail: true // Valida se é um e-mail válido
+            }
         },
         telefone: {
             type: Sequelize.STRING,
@@ -28,9 +31,23 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: false,
             unique: true,
             validate: {
-                len: [11, 11]
+                len: [11, 11], // Garante exatamente 11 caracteres
+                isNumeric: true // Garante que só tenha números
             }
         }
+    }, {
+        tableName: 'clientes', // Evita problemas com nomes de tabelas
+        timestamps: false
     });
+
+    Cliente.associate = (models) => {
+        Cliente.belongsToMany(models.Reserva, {
+            through: models.ClienteReserva,
+            foreignKey: 'cliente_id', 
+            otherKey: 'reserva_id',
+            as: 'reservas'
+        });
+    };
+
     return Cliente;
-}
+};

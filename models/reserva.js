@@ -24,6 +24,15 @@ module.exports = (sequelize, Sequelize) => {
                 key: 'id'
             },
             field: 'quarto_id'
+        },
+        pagador_id: {
+            type: Sequelize.INTEGER,
+            allowNull: false,
+            references: {
+                model: 'clientes',
+                key: 'id'
+            },
+            field: 'pagador_id'
         }
     }, {
         tableName: 'reservas',
@@ -32,6 +41,7 @@ module.exports = (sequelize, Sequelize) => {
 
     Reserva.associate = (models) => {
         Reserva.belongsTo(models.Quarto, { foreignKey: 'quarto_id' });
+        Reserva.belongsTo(models.Cliente, { foreignKey: 'pagador_id' });
         Reserva.belongsToMany(models.Cliente, {
             through: models.ClienteReserva,
             foreignKey: 'reserva_id', 

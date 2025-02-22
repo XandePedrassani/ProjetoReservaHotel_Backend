@@ -22,5 +22,10 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: true
         }
     });
+
+    Quarto.associate = (models) => {
+        Quarto.hasMany(models.Reserva);
+    };    
+
     return Quarto;
 };

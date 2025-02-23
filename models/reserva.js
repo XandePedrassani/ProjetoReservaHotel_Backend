@@ -41,7 +41,7 @@ module.exports = (sequelize, Sequelize) => {
 
     Reserva.associate = (models) => {
         Reserva.belongsTo(models.Quarto, { foreignKey: 'quarto_id' });
-        Reserva.belongsTo(models.Cliente, { foreignKey: 'pagador_id' });
+        Reserva.belongsTo(models.Cliente, { foreignKey: 'pagador_id', as: 'pagador' });
         Reserva.belongsToMany(models.Cliente, {
             through: models.ClienteReserva,
             foreignKey: 'reserva_id', 

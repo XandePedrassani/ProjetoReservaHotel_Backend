@@ -126,6 +126,8 @@ module.exports = {
                         { model: db.Quarto },
                         { model: db.Cliente, as: 'clientes', through: { attributes: [] } },
                         { model: db.Cliente, as: 'pagador' }
+                        { model: db.Cliente, as: 'clientes', through: { attributes: [] } },
+                        { model: db.Cliente, as: 'pagador' }
                     ]
                 });
                 res.status(200).json(updatedReserva);

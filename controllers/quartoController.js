@@ -1,4 +1,5 @@
 const db = require('../config/db_sequelize');
+const { Op } = require('sequelize');
 
 module.exports = {
     async postQuarto(req, res) {
@@ -53,16 +54,36 @@ module.exports = {
     },
 
     async deleteQuarto(req, res) {
+        const transaction = await db.sequelize.transaction();
         try {
-            const deleted = await db.Quarto.destroy({
-                where: { id: req.params.id }
+            const quartoId = req.params.id;
+
+            const reservas = await db.Reserva.findAll({
+                where: { quarto_id: quartoId },
+                transaction
             });
+
+            if (reservas.length > 0) {
+                await db.Reserva.destroy({
+                    where: { quarto_id: quartoId },
+                    transaction
+                });
+            }
+       
+            const deleted = await db.Quarto.destroy({
+                where: { id: quartoId },
+                transaction
+            });
+
             if (deleted) {
+                await transaction.commit();
                 res.status(204).json();
             } else {
+                await transaction.rollback();
                 res.status(404).json({ error: 'Quarto não encontrado' });
             }
         } catch (err) {
+            await transaction.rollback();
             console.error(err);
             res.status(500).json({ error: 'Erro ao deletar quarto' });
         }

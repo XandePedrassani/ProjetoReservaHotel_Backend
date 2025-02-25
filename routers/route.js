@@ -1,11 +1,10 @@
 const express = require('express');
 const userController = require('../controllers/userController');
 const authController = require('../controllers/authController');
-
 const clienteController = require('../controllers/clienteController');
 const quartoController = require('../controllers/quartoController');
-const reservaController = require('../controllers/reservaController')
-
+const reservaController = require('../controllers/reservaController');
+const disponibilidadeController = require('../controllers/disponibilidadeController');
 const authenticateToken = require('../middleware/authenticateToken');
 
 const router = express.Router();
@@ -43,5 +42,8 @@ router.get('/reservas', reservaController.getReservas);
 router.get('/reservas/:id', reservaController.getReservaById);
 router.put('/reservas/:id', reservaController.putReserva);
 router.delete('/reservas/:id', reservaController.deleteReserva);
+
+router.get('/ocupados', disponibilidadeController.getQuartosOcupados);
+router.get('/disponiveis', disponibilidadeController.getQuartosDisponiveis);
 
 module.exports = router;
